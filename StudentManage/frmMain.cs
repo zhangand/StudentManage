@@ -36,19 +36,20 @@ namespace StudentManage
             try
             {
                 //read file
-                objListStudent = readFileToList(fileName);
+                objListStudent = ReadFileToList(fileName);
+                LoadDataToDataGrid(objListStudent);
             }
             catch (Exception ex)
             {
 
-                MessageBox.Show("Read File Error"+ex.Message,"System Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("Read File Error, "+ex.Message,"System Message",MessageBoxButtons.OK,MessageBoxIcon.Information);
 
             }
         }
 
 
         //user define method
-        private List<string> readFileToList(string filepath)// read file return student list
+        private List<string> ReadFileToList(string filepath)// read file return student list
         {
             List<string> objList = new List<string>();
             string line = string.Empty;
@@ -70,7 +71,23 @@ namespace StudentManage
             }
             return objList;
         }
+        private void LoadDataToDataGrid(List<string> objlist)//load student string to datagridview
+        {
+            
 
+            foreach (string item in objlist)
+            {
+                string[] studentArray = item.Split(',');
+                DataGridViewRow row = new DataGridViewRow();
+                row.CreateCells(dgvStudent);
+                row.Cells[0].Value = studentArray[0];
+                row.Cells[1].Value = studentArray[1];
+                row.Cells[2].Value = studentArray[2];
+                row.Cells[3].Value = studentArray[3];
+                row.Cells[4].Value = studentArray[4];
+                dgvStudent.Rows.Add(row);
+            }
+        }
 
     }
 }
